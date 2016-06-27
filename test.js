@@ -34,4 +34,20 @@ describe('SHH', function() {
         });
       });
     });
-  });});
+  });
+
+  it('should add and remove watchers', function (done) {
+    shhFactory(uri, function(shh) {
+      var replyWatch = shh.watch({
+        "topic": [ 'abc' ],
+        "to": 'Foo'
+      });
+      replyWatch.arrived(function(m) {});
+      
+      assert.equal(shh.watchers['abc'].length, 1);
+      replyWatch.remove();
+      assert.equal(typeof shh.watchers['abc'], 'undefined');
+      done();
+    });
+  });
+});

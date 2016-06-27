@@ -25,4 +25,6 @@ Usage:
       replyWatch.arrived(function(m) {
         assert.equal(m.payload.join(' '), 'What is your name? ' + myName);
       });
+
+      replyWatch.remove(); // Remove all watchers on this topic
     });

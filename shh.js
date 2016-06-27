@@ -27,13 +27,21 @@ var shhFactory = function(uri, next) {
       if (typeof options.topic != 'undefined') {
         topic = options.topic.join('');
       }
-      var ev = {arrived: function(fun){
-        if (typeof instance.watchers[topic] == 'undefined') {
-          instance.watchers[topic] = [fun];
-        } else {
-          instance.watchers[topic].push(fun);
-        }  
-      }};
+      var ev = {
+        arrived: function(fun){
+          if (typeof instance.watchers[this.topic] == 'undefined') {
+            instance.watchers[this.topic] = [fun];
+          } else {
+            instance.watchers[this.topic].push(fun);
+          }  
+        },
+        remove: function() {
+          if (typeof instance.watchers[this.topic] != 'undefined') {
+            delete instance.watchers[this.topic];
+          }
+        }
+      };
+      ev.topic = topic;
       return ev;
     },
 
