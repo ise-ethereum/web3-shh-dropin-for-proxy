@@ -15,6 +15,10 @@ var shhFactory = function(uri, next) {
       return this.identity;
     },
 
+    register: function(identity) {
+      this.socket.emit('register', {address: identity});
+    },
+
     post: function(options) {
       if (typeof options.topic != 'undefined') {
         options.topic = options.topic.join('');
